@@ -1,0 +1,9 @@
+
+安装homebrow
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+
+安装nginx
+brew install nginx
+brew install memcached
+brew install redis

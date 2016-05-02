@@ -20,14 +20,7 @@ function  testFun(){
 	return $C;
 }
 echo $D;
-$ARR=array("1","2","3");//数组
-$ARR2=array("first"=>1,"second"=>"2","third"=>"3");//键值对数组
-foreach ($ARR as $value){//遍历数组
-	echo $value;
-}
-foreach ($ARR2 as $key=>$value){//遍历键值对数组
-	echo "$key=$value";
-}
+ 
 
 print_r($ARR);
 print_r($ARR2);
@@ -56,10 +49,7 @@ switch (date("D")){
 	case "Sat":echo "周六";break;
 	default:break;
 }
-while (list($key,$value)=each($ARR2)){
-	echo $key;
-	echo $value;
-}
+
 
 
 

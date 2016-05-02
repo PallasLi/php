@@ -1,4 +1,22 @@
 <?php
+//双引号支持转义，单引号不支持
+//网页换行用<br /> 程序代码输出换行用\n
+$str="   a  af   \naafj";
+$str1='   a  af   \naafj';
+trim($str);
+ltrim($str);
+rtrim($str);
+$str=nl2br($str);//转义符\n转换成<br />
+$str=htmlspecialchars($str);//将特殊字符转换为HTML实体
+echo $str;
+$str1=nl2br($str1);
+echo $str1;
+
+str_pad($str, 10," ");//填充字符
+str_pad($str, 10," ",STR_PAD_BOTH);//STR_PAD_BOTH：两边填充字符，STR_PAD_LEFT,STR_PAD_Right
+strtolower($str);
+strtoupper($str);
+
 /**
  * 字符串函数
  * trim,ltrim,rtrim($str,$trimstr)
@@ -49,5 +67,4 @@ echo substr("1233456", -6,2);
 echo "\n";
 echo substr("1233456", -6,-2);
 echo "\n";
-
 ?>
