@@ -1,0 +1,21 @@
+<xml>
+    <ToUserName><![CDATA[oHQryshnZ4GHpv2gxWMZjkO4Oct8]]></ToUserName>
+    <FromUserName><![CDATA[gh_e1d2d0db54a8]]></FromUserName>
+    <CreateTime>1420985258</CreateTime>
+    <MsgType><![CDATA[news]]></MsgType>
+    <ArticleCount>2</ArticleCount>
+    <Articles>
+                <item>
+            <Title><![CDATA[肯德基(奥克斯广场餐厅)[锦城大道666号天虹百货高新店1楼120～122号]]]></Title>
+            <Description><![CDATA[description1]]></Description>
+            <PicUrl><![CDATA[picurl]]></PicUrl>
+            <Url><![CDATA[url]]></Url>
+        </item>
+                <item>
+            <Title><![CDATA[肯德基奥克斯广场餐厅-洗手间[锦城大道666号天虹百货高新店1楼120～122号]]]></Title>
+            <Description><![CDATA[description1]]></Description>
+            <PicUrl><![CDATA[picurl]]></PicUrl>
+            <Url><![CDATA[url]]></Url>
+        </item>
+            </Articles>
+</xml>

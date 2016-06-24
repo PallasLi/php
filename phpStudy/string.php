@@ -35,6 +35,26 @@ strtoupper($str);
  * substr_replace($string, $replacement, $start)
  * number_format($number)
  * explode($delimiter, $string [,$limit]) 分割函数为数组
+* 
+*  查找子字符串
+* PHP 提供一些函数用来拆解，搜索和比较字符串
+* 
+* strtok
+* substr
+* strlen
+* str_word_count 字符串的单词数量
+* strcmp 不区分大小写 strcasecmp
+* strnatcmp 不区分大小写 strnatcasecmp
+* strstr 不区分大小写 stristr
+* strpos 不区分大小写 stripos
+* 替换局部字符串
+* str_ireplace 不区分大小写
+* str_replace 区分大小写
+* trim 移除字符串首尾的所有空白 rtrim 移除右边 ltrim 移除左边
+* ucfirst 第一个字母大写
+* ucwords 每个单词第一个字母大写
+* strtoupper 整个字符串大写
+* strtolower 整个字符串小写
  */
 echo "\n";
 echo ltrim("    a  d    ");
