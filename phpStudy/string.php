@@ -17,6 +17,8 @@ str_pad($str, 10," ",STR_PAD_BOTH);//STR_PAD_BOTH：两边填充字符，STR_PAD
 strtolower($str);
 strtoupper($str);
 
+echo strpos("Hello world!","world");
+
 /**
  * 字符串函数
  * trim,ltrim,rtrim($str,$trimstr)
@@ -36,6 +38,8 @@ strtoupper($str);
  * number_format($number)
  * explode($delimiter, $string [,$limit]) 分割函数为数组
 * 
+*  strpos 函数用于在字符串内检索一段字符串或一个字符。
+*
 *  查找子字符串
 * PHP 提供一些函数用来拆解，搜索和比较字符串
 * 

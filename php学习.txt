@@ -1,3 +1,175 @@
+
+Apache Web 服务器配置
+如果你使用 Apache Web 服务器，这部分将指导您编辑 Apache 配置文件。
+
+只是在这里检查: : PHP Configuration in Apache Server
+
+PHP.INI 文件配置
+PHP 配置文件 PHP.ini, 这个配置文件是影响到 PHP 的功能最直接的方式。
+
+只是在这里检查: PHP.INI File Configuration
+
+在 Mac OS X 安装 PHP
+
+Mac 用户可以以二进制文件安装或源代码安装。事实上，你的 OS X 可能附带 Apache 和 PHP 预按装。这是可能是相当老的组件，它可能缺少许多不常见的扩展。
+
+然而，如果你想要在您的便携式计算机上快速设置 Apache + PHP + MySQL/PostgreSQL，你只需要编辑你的 Apache 配置文件和打开 Web 服务器。
+
+因此只需遵循以下步骤：
+
+用文本编辑器打开 Apache 配置文件设为最高权限
+    sudo open -a TextEdit /etc/httpd/httpd.conf
+编辑文件，反注释以下行
+    Load Module php5_module
+    AddModule mod_php5.c
+    AddType application/x-httpd-php .php
+您可能还想要反注释 < Directory /home/*/Sites > 模块或告诉 Apache 服务的目录。
+重新启动 Web 服务器
+    sudo apachectl graceful
+打开文本编辑器。类型： <? php phpinfo () ；? >。将此文件保存在 Web 服务器的根目录中并命名为 info.php。
+启动 Web 浏览器和浏览这个文件. 但为正确生成文件必须始终使用 HTTP 请求 （http://www.testdomain.com/info.php 或 http://localhost/info.php 或 http://127.0.0.1/info.php），而不是文件名 （/home/httpd/info.php)
+您应该看到一个长方形的信息关于你的新的 PHP 安装消息 Congratulations!
+
+
+Apache 配置 PHP
+
+Apache 使用 httpd.conf 文件进行全局设置， .htaccess 文件对每个目录进行访问设置。老版本的 Apache 把 httpd.conf 拆成三个文件 (access.conf、 httpd.conf，和 srm.conf），有些用户仍青睐于此。
+
+Apache 服务器功能非常强大，但配置系统稍复杂。了解更多点击这里：
+
+下一节讲述 httpd.conf 的独特设置对 PHP 的直接影响并且不能设置到其他位置。如果您进行标准安装，这时httpd.conf 会安装在以下位置 /etc/httpd/conf。
+
+Timeout
+这个值设置默认的秒数之前任何 HTTP 请求将会超时。如果您设置 PHP.ini 里面的参数 max_execution_time 超过这个值，PHP 将继续保持原状，但用户可能看到一个 404 错误。在安全模式下，该值将被忽略；您必须使用 PHP.ini 里面的参数 timeout 的超时值所代替。
+
+DocumentRoot
+DocumentRoot 为所有 HTTP 服务器进程指定根目录。在 UNIX 上它看起来像这样:
+
+    DocumentRoot ./usr/local/apache_1.3.6/htdocs.
+你可以选择任何文档作为根目录
+
+AddType
+PHP MIME 类型需要在这里设置要解析的 PHP 文件。请记住你可以关联 PHP 任何扩展文件像 .php3、.php5 或.htm。
+
+    AddType application/x-httpd-php .php
+    AddType application/x-httpd-phps .phps
+    AddType application/x-httpd-php3 .php3 .phtml
+    AddType application/x-httpd-php .html
+Action
+您必须取消注释这一行的 Apache 上的共享对象支持的 Windows Apxs 模块版本：
+
+    LoadModule php4_module modules/php4apache.dll
+或在 UNIX 上的共享对象支持：
+
+    LoadModule php4_module modules/mod_php.so
+AddModule
+您必须取消注释 Apache 静态模块版本。
+
+    AddModule mod_php4.c
+
+
+
+PHP.INI 文件配置
+
+PHP 配置文件 php.ini，它是最终并且是最直接影响 PHP 功能的配置文件。每次 PHP 初始化都要读取 php.ini 文件。换句话说，只要模块版本执行 CGI 版本或与每个脚本执行 CGI 版本，httpd 都要重启。如果你的设置没有显示在 phpinfo()中记得要停止并重新启动 httpd。如果它仍然无法显示，使用 phpinfo () 检查 php.ini 文件的路径。
+
+配置文件被很好的注释和配置。键是区分大小写的，关键字的值则不区分大小写 ；忽略空白处和分号开头行。用1/0, Yes/No, On/off 或 true/false 表示布尔值。在 php.ini-Dist 文件中，默认值有助于 PHP 顺利安装，默认值可稍后调整。
+
+在这里我们解释下 php.ini 文件重要设置，它需要 PHP 解析器。
+
+Short_open_tag = Off
+短标记看起来像这样： <? ?>。如果您想要使用 XML 功能,此选项必须设置关闭。
+
+safe_mode = Off
+如果此设置为开时，你可能编译 PHP 为--enable-safe-mode标志。安全模式与 CGI 使用最相关。详见这一章前一部分"CGI compile-time options"一节。
+
+safe_mode_exec_dir = [DIR]
+此选项只有在安全模式开启时才会生效；它也可以在 UNIX 生成过程中与 --with-exec--dir 标志一起设置。在安全模式下 PHP 只是执行此目录之外的外部二进制文件。默认值为 /usr/local/bin。这与提供正常的 PHP/HTML 网页页面无关。
+
+safe_mode_allowed_envvars = [PHP]
+在安全模式下，用户设置此选项可以更改哪些环境变量，默认值是只为这些以"PHP_"前缀的变量。如果这项指令为空，则大多数变量都可变。
+
+safe_mode_protected_env_vars = [LD_LIBRARY_PATH]
+在安全模式下，用户设置此选项可以更改哪些环境变量，即使允许更改设置 safe_mode_allowed_env_vars。
+
+disable_functions = [function1, function2...]
+出于安全考虑 PHP4 新增配置和 PHP5 标准配置中使用了禁用选定功能。以前，这需要 PHP 手动编辑成 C 代码。文件系统、系统和网络功能可能是第一选择，因为通过 HTTP 写入允许文件和更改系统永远不是安全的。
+
+max_execution_time = 30
+此函数 set_time_limit() 不能在在安全模式下运行，所以这是安全模式下进行脚本超时的主要方式。在 Windows 系统中，你必须中止消耗最大内存，而不是时间。如果您使用 Apache，也可以使用 Apache timeout 设置超时，但这不适用站点上的非 PHP 文件。
+
+error_reporting = E_ALL & ~E_NOTICE
+除了提示外包含所有的错误默认值是 E_ALL & ~ E_notice。开发服务器一定要最低限度设置成默认值；生产服务器可以考虑设置成较小的值。
+
+error_prepend_string = [""]
+在书挡中，error_append_string，此设置允许将错误消息标记为与其他的文本不同的颜色，或者你想要的颜色。
+
+warn_plus_overloading = Off
+如果在字符串中使用 + 运算符,作为表单中的值，这个设置会发出一条警告。
+
+variables_order = EGPCS
+此配置设置将取代 gpc_order。现在都是随着 register_globals 被弃用。它设置不同变量的顺序：Environment, GET, POST, COOKIE, and SERVER (aka Built-in)。您或许可以更改此顺序。变量从左到右依次覆盖，而且，每次最右边那个优先级最高。这意味着如果你剩下默认设置，正巧使用相同名称的环境变量，POST 变量和 COOKIE 变量，这样的话 COOKIE 变量将会拥有该名称。其实，这不会经常发生的。
+
+register_globals = Off
+此设置允许您决定是否注册 EGPCS 变量为全局变量。现在处于关闭状态，并且 PHP4.2，此标志默认设置是关闭的。现在都改用超全局变量数组。在这本书中所有列出的主要代码都使用的超全局变量数组。
+
+gpc_order = GPC
+此设置 GPC 已弃用。
+
+magic_quotes_gpc = On
+此设置转义引号传入 GET/POST/COOKIE 数据。如果你使用很多自动提交表单或其他形式提交并显示窗体值，您可能需要设置此指令开或准备使用 addslashes() on string-type 数据。
+
+magic_quotes_runtime = Off
+此设置转义来自传入数据库和文本字符串的引号。当存储字符串和当返回值没有带斜杠时，请记住 SQL 添加斜杠在单引号和撇号前面。如果此设置为关，你又要输出 SQL 数据库中的字符串数据时请使用 stripslashes()。如果 magic_quotes_sybase 设置为 On，此必须处于关闭状态。
+
+magic_quotes_sybase = Off
+这个参数只在启用 magic_quotes_runtime 时才有意义。如果启用了 magic_quotes_sybase，所有来自外部资源的数据都将使用一个单引号而不是反斜线进行转义。如果数据来自 Sybase 数据库，这就非常有用，因为 Sybase 数据库的转义字符不是反斜线，而是非传统的单引号。
+
+auto-prepend-file = [path/to/file]
+如果指定路径，每个 PHP 文件的开头必须自动 include() 。包含路径设置适用。
+
+auto-append-file = [path/to/file]
+如果指定路径，每个 PHP 文件的结尾必须自动 include()。除非你通过使用 exit() 函数来避免。包含路径设置适用。
+
+include_path = [DIR]
+如果设置此值，你只要允许包含或需要这些目录中的文件即可。这些目录一般是你文档的根目录；如果在安全模式下运行，设置这些为强制执行。如此设置为包含您同一目录脚本中的文件。多个目录以冒号分隔：/usr/local/apache/htdocs:/usr/local/lib。
+
+doc_root = [DIR]
+如果使用 Apache，你应该已经在 httpd.conf 虚拟主机和此服务器设置了根目录。如果你使用安全模式或如果要在你站点部分启用 PHP，在此处设置此值（比如，仅在您网页根目录的一个子目录中）。
+
+file_uploads = [on/off]
+如果使用 PHP 脚本上传文件则打开此标志。
+
+upload_tmp_dir = [DIR]
+如果您明白 HTTP 上传的具体影响，请注释这条！
+
+session.save-handler = files
+除了在极少数情况下，请不要更改此设置。所以别管它。
+
+ignore_user_abort = [On/Off]
+设置客户端断开连接时是否中断脚本的执行
+
+PHP 以命令行脚本执行时，当脚本终端结束，脚本不会被立即中止，除非设置 value 为 TRUE，否则脚本输出任意字符时会被中止。
+
+此设置控制站点访问者点击关闭的原因。默认开启就意味着脚本持续运行到完成或超时。如果设置更改为关闭，该脚本将中止。此设置仅适用模块模式而不是 CGI 模式。
+
+mysql.default_host = hostname
+如果不指定任何其他主机时，服务器主机默认使用最初连接到的数据库服务器的主机。
+
+mysql.default_user = username
+如果未指定主机名，默认使用最初连接的服务器名。
+
+mysql.default_password = password
+如果不指定设置密码则默认使用最初连接到的服务器密码。
+
+
+
+
+  
+
+
+
+
 自动加载类
 
 使用 spl_autoload_register() 来注册你的自动加载函数。
