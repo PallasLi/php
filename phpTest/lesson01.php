@@ -28,7 +28,21 @@ printf($i);#//单行注释
 
 
 ?>
-<?php phpinfo(); ?>
+<?php 
+echo  ctype_alnum("a\][fhaf344");	//做字母和数字字符检测	
+echo ctype_alpha("alha");	//做纯字符检测	
+echo ctype_cntrl("alh");	//做控制字符检测	
+echo ctype_digit("43743");	//做纯数字检测	
+echo ctype_graph("akfafl alfj");	//做可打印字符串检测，空格除外	
+echo ctype_lower("akfhakf");	//做小写字符检测	
+echo ctype_print("alfjlaf");	//做可打印字符检测	
+echo ctype_punct("alfjal");	//检测可打印的字符是不是不包含空白、数字和字母	
+echo ctype_space("ajflaf");	//做空白字符检测	
+echo ctype_upper("KJHKK");	//做大写字母检测	
+echo ctype_xdigit("ajflaf");	//检测字符串是否只包含十六进制字符	
+
+?>
 <html>
 
 </html>
+

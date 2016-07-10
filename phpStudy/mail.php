@@ -1,4 +1,74 @@
 
+
+发送邮件
+
+使用PHPMailer
+
+经 PHPMailer 5.1 测试
+
+PHP 提供了一个 mail() 函数，看起来很简单易用。 不幸的是，与 PHP 中的很多东西一样，它的简单性是个幻象，因其虚假的表面使用它会导致严重的安全问题。
+
+Email 是一组网络协议，比 PHP 的历史还曲折。完全可以说发送邮件中的陷阱与 PHP 的 mail() 函数一样多，这个可能会令你有点「不寒而栗」吧。
+
+PHPMailer 是一个流行而成熟的开源库，为安全地发送邮件提供一个易用的接口。 它关注可能陷阱，这样你可以专注于更重要的事情。
+
+示例
+<?php
+// Include the PHPMailer library
+require_once('phpmailer-5.1/class.phpmailer.php');
+
+// Passing 'true' enables exceptions.  This is optional and defaults to false.
+$mailer = new PHPMailer(true);
+
+// Send a mail from Bilbo Baggins to Gandalf the Grey
+
+// Set up to, from, and the message body.  The body doesn't have to be HTML;
+// check the PHPMailer documentation for details.
+$mailer->Sender = 'bbaggins@example.com';
+$mailer->AddReplyTo('bbaggins@example.com', 'Bilbo Baggins');
+$mailer->SetFrom('bbaggins@example.com', 'Bilbo Baggins');
+$mailer->AddAddress('gandalf@example.com');
+$mailer->Subject = 'The finest weed in the South Farthing';
+$mailer->MsgHTML('<p>You really must try it, Gandalf!</p><p>-Bilbo</p>');
+
+// Set up our connection information.
+$mailer->IsSMTP();
+$mailer->SMTPAuth = true;
+$mailer->SMTPSecure = 'ssl';
+$mailer->Port = 465;
+$mailer->Host = 'my smpt host';
+$mailer->Username = 'my smtp username';
+$mailer->Password = 'my smtp password';
+
+// All done!
+$mailer->Send();
+?>
+
+
+
+
+验证邮件地址
+
+使用 filter_var() 函数
+Web 应用可能需要做的一件常见任务是检测用户是否输入了一个有效的邮件地址。毫无疑问你可以在网上找到一些声称可以解决该问题的复杂的正则表达式，但是最简单的方法是使用 PHP 的内建 filter_val() 函数。
+
+示例
+<?php
+filter_var('sgamgee@example.com', FILTER_VALIDATE_EMAIL);
+//Returns "sgamgee@example.com". This is a valid email address.
+
+filter_var('sauron@mordor', FILTER_VALIDATE_EMAIL);
+// Returns boolean false! This is *not* a valid email address.
+?>
+进一步阅读
+PHP 手册：filter_var()
+PHP 手册：过滤器的类型
+注意
+邮件地址验证也可以交给前端解决。HTML 5 的 表单即支持验证邮箱地址。只需将input元素的type设为email，就会自动验证用户输入的是否是合法的邮件地址。
+
+<input type="email" name="email"></pre>
+
+
 邮件发送
 
 必须正确配置 PHP 中 PHP.ini 文件中如何详细地使用系统发送电子邮件。打开php.ini文件中可用 /etc/目录，找到部分[邮件函数]。

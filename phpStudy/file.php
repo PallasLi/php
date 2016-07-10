@@ -1,5 +1,13 @@
 <?php
-
+// chdir();	//改变当前的目录。	4
+// chroot();	//改变当前进程的根目录。	4.0.4
+// dir();	//打开一个目录句柄，并返回一个对象。	4
+// closedir();	//关闭目录句柄。	4
+// getcwd();	//返回当前目录。	4
+// opendir();	//打开目录句柄。	4
+// readdir();	//返回目录句柄中的条目。	4
+// rewinddir();	//重置目录句柄。	4
+// scandir();	//列出指定路径中的文件和目录。	5
 $hasfile=file_exists("/Users/lyt1987/Desktop/GitHub/php/phpStudy/newfile.php");
 echo "\n";
 echo $hasfile; //判断文件是否存在
